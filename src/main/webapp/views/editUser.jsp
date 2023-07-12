@@ -10,7 +10,7 @@
 <h1>Edit User</h1>
 <form:form action="/admin/editUserHandle" method="post">
     <label for="username">Username:</label>
-    <input type="text" id="username" name="username" value="<sec:authentication property="principal.username"/>" required><br>
+    <input type="text" id="username" name="username" value="" required><br>
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" value="" required><br>

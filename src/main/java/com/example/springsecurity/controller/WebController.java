@@ -3,18 +3,14 @@ package com.example.springsecurity.controller;
 import com.example.springsecurity.model.UserEntity;
 import com.example.springsecurity.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -45,14 +41,16 @@ public class WebController {
 
     @RequestMapping("/admin/addUser")
     public ModelAndView addUser() {
-        ModelAndView adminModelAndView = new ModelAndView("addUser");
-        return adminModelAndView; // Trả về admin.jsp
+        ModelAndView addUserModelAndView = new ModelAndView("addUser");
+        addUserModelAndView.addObject("addUser", "addUser");
+        return addUserModelAndView; // Trả về admin.jsp
     }
 
     @RequestMapping("/admin/editUser")
     public ModelAndView editUser() {
-        ModelAndView adminModelAndView = new ModelAndView("editUser");
-        return adminModelAndView; // Trả về admin.jsp
+        ModelAndView editUserModelAndView = new ModelAndView("editUser");
+        editUserModelAndView.addObject("editUser", "editUser");
+        return editUserModelAndView; // Trả về admin.jsp
     }
 
     @RequestMapping("/user")
@@ -77,7 +75,7 @@ public class WebController {
     }
 
     @RequestMapping(value = "/admin/addUserHandle", method = RequestMethod.POST)
-    public ModelAndView addUser(@RequestParam("username") String username,
+    public ModelAndView addUserHandler(@RequestParam("username") String username,
                                 @RequestParam("password") String password,
                                 @RequestParam(value = "option1", required = false) String option1,
                                 @RequestParam(value = "option2", required = false) String option2,
@@ -115,6 +113,11 @@ public class WebController {
 
     }
 
+    @RequestMapping(value = "/admin/editUserHandle", method = RequestMethod.POST)
+    public ModelAndView editUserHandler() {
+        return new ModelAndView("redirect:/admin");
+    }
+
     @RequestMapping(value = "/admin/delete")
     public ModelAndView deleteUser(@RequestParam("username") String username, RedirectAttributes redirectAttributes) {
         service.deleteUserById(username);
@@ -122,9 +125,9 @@ public class WebController {
         return new ModelAndView("redirect:/admin");
     }
 
-    public boolean isAdmin() {
+    /*public boolean isAdmin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
-    }
+    }*/
 }
