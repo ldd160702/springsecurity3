@@ -22,7 +22,7 @@ public class UserEntity {
     @Column(name = "enable")
     private int enabled;
 
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Authority> authorities;
 
@@ -69,6 +69,7 @@ public class UserEntity {
         return authorities;
     }
 
+    @JsonIgnore
     public List<String> getRoles() {
         List<String> roles = new ArrayList<>();
         for (Authority authority : authorities) {

@@ -1,5 +1,7 @@
 package com.example.springsecurity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -20,6 +22,7 @@ public class Authority {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username")
+    @JsonIgnore
     private UserEntity user;
 
     public Authority() {
