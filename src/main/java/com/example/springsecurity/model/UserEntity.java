@@ -22,6 +22,7 @@ public class UserEntity {
     @Column(name = "enable")
     private int enabled;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Authority> authorities;
 
